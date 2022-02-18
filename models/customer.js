@@ -73,7 +73,7 @@ class Customer {
         ORDER BY count(r.id) DESC
         LIMIT 10`,
     );
-    return results.map(customer => new Customer(customer));
+    return results.rows.map(customer => new Customer(customer));
   }
 
   /** get first and last name and join together for full name value of instance */

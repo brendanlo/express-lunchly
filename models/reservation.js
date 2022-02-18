@@ -18,7 +18,7 @@ class Reservation {
   }
 
   /** formatter for startAt */
-
+  // CR: TODO: could turn this into a getter to replace startAt
   getFormattedStartAt() {
     return moment(this.startAt).format("MMMM Do YYYY, h:mm a");
   }
