@@ -78,10 +78,10 @@ class Customer {
 
   /** get first and last name and join together for full name value of instance */
 
-  fullName() {
-    const fullName = `${this.firstName} ${this.lastName}`;
+  get fullName() {
+    this._fullName = `${this.firstName} ${this.lastName}`;
 
-    return fullName;
+    return this._fullName;
   }
 
   /** get all reservations for this customer. */

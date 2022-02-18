@@ -17,6 +17,22 @@ class Reservation {
     this.notes = notes;
   }
 
+  get notes() {
+    return this._notes;
+  }
+
+  set notes(val) {
+    if (val) {
+      this._notes = val;
+    }
+    else {
+      this._notes = "";
+    }
+  }
+
+
+
+
   /** formatter for startAt */
   // CR: TODO: could turn this into a getter to replace startAt
   getFormattedStartAt() {
