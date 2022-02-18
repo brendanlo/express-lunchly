@@ -20,6 +20,23 @@ router.get("/", async function (req, res, next) {
   return res.render("customer_list.html", { customers });
 });
 
+/** Accepts query parameter via search form, and displays all customer matches */
+
+router.get("/search", async function (req, res, next) {
+
+  let searchName = req.query.search;
+
+  searchName = searchName.split("+");
+
+  const allCustomers = await Customer.all();
+  const foundCustomers = allCustomers.filter((customer) => {
+    return (searchName.includes(customer.firstName) || searchName.includes(customer.lastName));
+  });
+  console.log("Search Name: ", searchName);
+
+  return res.render("customer_list.html", { customers: foundCustomers });
+});
+
 /** Form to add a new customer. */
 
 router.get("/add/", async function (req, res, next) {
@@ -67,21 +84,6 @@ router.post("/:id/edit/", async function (req, res, next) {
 
   return res.redirect(`/${customer.id}/`);
 });
-
-router.get("/search", async function (req, res, next) {
-  const searchName = req.query.search;
-  console.log(searchName);
-  searchName = searchName.split("+");
-  // TODO: GET ALL first names put in array. GET ALL last names put in array
-  // CHECK if our search terms are in either
-
-  const allCustomers = await Customer.all();
-  const foundCustomers = allCustomers.filter(function (customer) {
-    return (customer.firstName in searchName || customer.lastName in searchName);
-  });
-  return res.render("customer_list.html", { customers: foundCustomers });
-});
-
 
 
 // #############################################################################
