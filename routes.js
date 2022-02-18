@@ -70,10 +70,17 @@ router.post("/:id/edit/", async function (req, res, next) {
 
 router.get("/search", async function (req, res, next) {
   const searchName = req.query.search;
-  const [firstName, secondName, ...] = searchName.split("+");
+  console.log(searchName);
+  searchName = searchName.split("+");
   // TODO: GET ALL first names put in array. GET ALL last names put in array
   // CHECK if our search terms are in either
-}
+
+  const allCustomers = await Customer.all();
+  const foundCustomers = allCustomers.filter(function (customer) {
+    return (customer.firstName in searchName || customer.lastName in searchName);
+  });
+  return res.render("customer_list.html", { customers: foundCustomers });
+});
 
 
 
