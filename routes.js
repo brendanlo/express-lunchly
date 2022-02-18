@@ -26,13 +26,21 @@ router.get("/search", async function (req, res, next) {
 
   let searchName = req.query.search;
 
-  searchName = searchName.split("+");
+  searchName = searchName.split(" ");
+  searchName = searchName.map(name => name.toLowerCase());
 
   const allCustomers = await Customer.all();
-  const foundCustomers = allCustomers.filter((customer) => {
-    return (searchName.includes(customer.firstName) || searchName.includes(customer.lastName));
+  let foundCustomers = allCustomers.filter((customer) => {
+    return (searchName.includes(customer.firstName.toLowerCase())
+      || searchName.includes(customer.lastName.toLowerCase()));
   });
-  console.log("Search Name: ", searchName);
+
+  // keeps any customer with both the first and last name in the query
+  foundCustomers = foundCustomers.filter(customer => {
+    return (searchName.includes(customer.firstName.toLowerCase())
+      && searchName.includes(customer.lastName.toLowerCase()));
+  }
+  )
 
   return res.render("customer_list.html", { customers: foundCustomers });
 });

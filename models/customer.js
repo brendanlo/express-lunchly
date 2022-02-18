@@ -56,12 +56,25 @@ class Customer {
     return new Customer(customer);
   }
 
+  /** gets the top 10 customers by number of reservations */
 
-  // static async search(string){
-  //   const results = await db.query(
-  //     `SELECT `
-  //   )
-  // }
+  static async bestCustomers() {
+    const results = await db.query(
+      `SELECT c.id,
+      c.first_name AS "firstName",
+      c.last_name  AS "lastName",
+      c.phone,
+      c.notes,
+      count(r.id) as reservation_count
+        FROM customers as c
+        JOIN reservations as r
+          ON c.id = r.customer_id
+        GROUP BY c.id
+        ORDER BY count(r.id) DESC
+        LIMIT 10`,
+    );
+    return results.map(customer => new Customer(customer));
+  }
 
   /** get first and last name and join together for full name value of instance */
 
@@ -106,5 +119,7 @@ class Customer {
     }
   }
 }
+
+
 
 module.exports = Customer;
