@@ -56,6 +56,14 @@ class Customer {
     return new Customer(customer);
   }
 
+  /** get first and last name and join together for full name value of instance */
+
+  fullName () {
+    const fullName = `${this.firstName} ${this.lastName}`;
+
+    return fullName;
+  }
+
   /** get all reservations for this customer. */
 
   async getReservations() {
