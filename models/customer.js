@@ -56,6 +56,13 @@ class Customer {
     return new Customer(customer);
   }
 
+
+  // static async search(string){
+  //   const results = await db.query(
+  //     `SELECT `
+  //   )
+  // }
+
   /** get first and last name and join together for full name value of instance */
 
   fullName () {

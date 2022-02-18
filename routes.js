@@ -9,6 +9,10 @@ const Reservation = require("./models/reservation");
 
 const router = new express.Router();
 
+
+// #############################################################################
+// Customer Routes
+
 /** Homepage: show list of customers. */
 
 router.get("/", async function (req, res, next) {
@@ -63,6 +67,19 @@ router.post("/:id/edit/", async function (req, res, next) {
 
   return res.redirect(`/${customer.id}/`);
 });
+
+router.get("/search", async function (req, res, next) {
+  const searchName = req.query.search;
+  const [firstName, secondName, ...] = searchName.split("+");
+  // TODO: GET ALL first names put in array. GET ALL last names put in array
+  // CHECK if our search terms are in either
+}
+
+
+
+// #############################################################################
+// Reservation Routes
+
 
 /** Handle adding a new reservation. */
 
