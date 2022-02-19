@@ -30,11 +30,35 @@ class Reservation {
     }
   }
 
+  get numGuests(){
+    return this._numGuests;
+  }
+
+  set numGuests(val){
+    if(val<1){
+      throw new Error("A reservation for 0 is sad. Not allowed.");
+    }
+    this._numGuests = val;
+  }
+
+  get startAt(){
+    return this._startAt;
+  }
+
+  set startAt(val){
+    if(!isNaN(val)){
+      this._startAt = val;
+    }
+    else{
+      throw new Error("Invalid date. Please use yyyy-mm-dd hh:mm am/pm");
+    }
+  }
+
 
 
 
   /** formatter for startAt */
-  // CR: TODO: could turn this into a getter to replace startAt
+
   getFormattedStartAt() {
     return moment(this.startAt).format("MMMM Do YYYY, h:mm a");
   }
