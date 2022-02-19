@@ -5,6 +5,7 @@
 const express = require("express");
 
 const Customer = require("./models/customer");
+const { fullTextNoteSearch } = require("./models/reservation");
 const Reservation = require("./models/reservation");
 
 const router = new express.Router();
@@ -109,6 +110,17 @@ router.post("/:id/edit/", async function (req, res, next) {
 // #############################################################################
 // Reservation Routes
 
+/** Search notes using FTS (full text search) PSQL functionality
+ * Displays TODO: ?????
+ */
+
+router.get("/note-search", async function (req, res, next){
+  let searchPhrase = req.query.noteSearch;
+
+  fullTextNoteSearch(searchPhrase);
+
+
+});
 
 /** Handle adding a new reservation. */
 

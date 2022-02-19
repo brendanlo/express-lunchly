@@ -30,31 +30,49 @@ class Reservation {
     }
   }
 
-  get numGuests(){
+  get numGuests() {
     return this._numGuests;
   }
 
-  set numGuests(val){
-    if(val<1){
+  set numGuests(val) {
+    if (val < 1) {
       throw new Error("A reservation for 0 is sad. Not allowed.");
     }
     this._numGuests = val;
   }
 
-  get startAt(){
+  get startAt() {
     return this._startAt;
   }
 
-  set startAt(val){
-    if(!isNaN(val)){
+  set startAt(val) {
+    if (!isNaN(val)) {
       this._startAt = val;
     }
-    else{
+    else {
       throw new Error("Invalid date. Please use yyyy-mm-dd hh:mm am/pm");
     }
   }
 
 
+  static async fullTextNoteSearch(query) {
+
+    const searchTerms = query.replace(" ", " & ");
+
+    const reservations = await db.query(
+      `SELECT id,
+      customer_id AS "customerId",
+      num_guests AS "numGuests",
+      start_at AS "startAt",
+      notes AS "notes"
+      FROM reservations
+      WHERE to_tsvector(notes) @@ to_tsquery($1)`,
+      [searchTerms]
+    )
+
+    
+
+  }
 
 
   /** formatter for startAt */
